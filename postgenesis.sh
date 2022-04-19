@@ -9,7 +9,7 @@ fi
 curl -s https://raw.githubusercontent.com/cryptongithub/init/main/logo.sh | bash 
 echo -e '\e[40m\e[92mCrypton Academy is a unique cryptocurrency community. \nCommunity chat, early gems, calendar of events, Ambassador programs, nodes, testnets, personal assistant. \nJoin (TG): \e[95mt.me/CryptonLobbyBot\e[40m\e[92m.\e[0m\n'
 
-function generate_gentx {
+function create_wallet {
 
     echo -e '\n\e[40m\e[92m1. Starting update...\e[0m'
 
@@ -76,27 +76,6 @@ function generate_gentx {
 
 }
 
-function faucet {
-    curl -X POST "https://faucet.torii-1.archway.tech/" \
-    -H "accept: application/json" \
-    -H "Content-Type: application/json" \
-    -d "{ \"address\": \"$ARCHWAY_ADDR\", \"coins\": [ \"1000000000utorii\" ]}"
-}
-
-#function startup {
-#    echo -e '\e[40m\e[92m' && read -p "Enter commission rate (between 0.01 and 1, 0.1 by default): " COMMISSION-RATE && echo -e '\e[0m'
-#    echo -e '\e[40m\e[92m' && read -p "Enter commission max rate: (between 0.01 and 1, 0.1 by default)" COMMISSION-MAX-RATE && echo -e '\e[0m'
-#    echo -e '\e[40m\e[92m' && read -p "Enter commission max change rate: (between 0.01 and 1, 0.01 by default)" COMMISSION-MAX-CHANGE-RATE && echo -e '\e[0m'
-#    archwayd tx staking create-validator \
-#      --from $ARCHWAY_ADDR \
-#      --amount 1000000utorii \
-#      --min-self-delegation 1000000 \
-#      --commission-rate $COMMISSION-RATE \
-#      --commission-max-rate $COMMISSION-MAX-RATE \
-#      --commission-max-change-rate $COMMISSION-MAX-CHANGE-RATE \
-#      --pubkey $(archwayd tendermint show-validator) \
-#}
-
 function cleanup {
       echo -e '\e[40m\e[91mAll previous data will be deleted. Triple check that you have saved all the necessary data.\e[0m' 
       read -p "Do you want to continue? Y/N: " -n 1 -r 
@@ -125,11 +104,7 @@ select option in "${options[@]}"
 do
     case $option in
         "Create wallet")
-            generate_gentx
-            break
-            ;;
-         "Request utorii")
-            faucet
+            create_wallet
             break
             ;;
          "Clean up!")
